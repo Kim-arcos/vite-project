@@ -15,13 +15,13 @@ async function register(username, password) {
   const hash = await bcrypt.hash(password, 10);
   const { rows } = await client.query(sql, [username, hash]);
   const user = rows[0];
-  return users;
+  return user;
 }
 
 async function login(username, password) {
   const sql = `
     SELECT * FROM users
-    WHERE usename = $1;
+    WHERE username = $1;
     `;
   const { rows } = await client.query(sql, [username]);
   const user = rows[0];
@@ -37,7 +37,9 @@ async function login(username, password) {
 
 async function getAllUsers() {
   const sql = `
-    SELECT`;
+    SELECT id, username FROM users;
+`;
+return client.query(sql);
 }
 
 function createTables() {
