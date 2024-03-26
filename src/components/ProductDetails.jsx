@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchProductDetails } from './api'; 
 
 function ProductDetails() {
   const { id } = useParams(); 
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchProductDetails(productId) {
+      const API_URL = 'https://fakestoreapi.com';
       try {
-        const data = await fetchProductDetails(id); 
+        const response = await fetch(`${API_URL}/products/${productId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch product details');
+        }
+        const data = await response.json();
         setProduct(data);
       } catch (error) {
         console.error('Error fetching product details:', error);
       }
     }
 
-    fetchData();
-  }, [id]);
+    fetchProductDetails(id);
+}, [id]);
 
   if (!product) {
     return <div>Loading...</div>;
