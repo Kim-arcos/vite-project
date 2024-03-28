@@ -14,6 +14,9 @@ function NavBar() {
         <li>
           <Link to="/account">Account</Link>
         </li>
+        <li>
+          <Link to="/cart">Cart</Link>
+        </li>
       </ul>
     </nav>
   );

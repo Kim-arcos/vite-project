@@ -33,7 +33,7 @@ function ProductDetails() {
       <p>Price: ${product.price}</p>
       <p>Category: {product.category}</p>
       <p>Description: {product.description}</p>
-      <img src={product.image} alt={product.title} style={{ maxWidth: '300px' }} />
+      <img src={product.image} alt={product.title} style={{ maxWidth: '100px' }} />
     </div>
   );
 }

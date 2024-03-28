@@ -21,20 +21,19 @@ function Home() {
   }, []);
 
   return (
-    <div className="Products">
-       <div>
-      <h1>Welcome to Our Store</h1>
-      <h2>
-        Explore our collection of products and find the perfect items for your needs.
-      </h2>
-    </div>
+    <div className="home-container">
+      <div className="banner">
+        <h1>Welcome to Our Store</h1>
+        <h2>Explore our collection of products and find the perfect items for your needs.</h2>
+      </div>
       <div className="product-list">
         {products.map(product => (
-          <div key={product.id} className="product-details">
-            <img src={product.image} alt={product.title} />
-            <h2>{product.title}</h2>
-            <p>{product.price}</p>
-            <button>Add to Cart</button>
+          <div key={product.id} className="product-card">
+            <img src={product.image} alt={product.title} className="product-image" />
+            <div className="product-info">
+              <h2>{product.title}</h2>
+              <p>${product.price}</p>
+            </div>
           </div>
         ))}
       </div>
