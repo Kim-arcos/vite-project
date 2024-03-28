@@ -24,7 +24,7 @@ function Home() {
     <div className="home-container">
       <div className="banner">
         <h1>Welcome to Our Store</h1>
-        <h2>Explore our collection of products and find the perfect items for your needs.</h2>
+        <h2>Explore our collection of products and find the perfect items for your needs</h2>
       </div>
       <div className="product-list">
         {products.map(product => (
