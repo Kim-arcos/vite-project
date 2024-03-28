@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { register, login } from '../db.js';
+//import { register, login } from '../db.js';
 
 function AccountPage() {
   const [username, setUsername] = useState('');
