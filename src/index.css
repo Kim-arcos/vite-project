@@ -166,3 +166,64 @@
 .nav-link:hover {
   background-color: #555; 
 }
+
+/* AccountPage */
+
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  align-items: center;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+.form-group input {
+  width: 94%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.form-group button {
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #3c87d8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-group button:hover {
+  background-color: #a9cefd;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
