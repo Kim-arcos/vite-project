@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-//import { register, login } from '../db.js';
+import React, { useState, useEffect } from 'react';
 
 function AccountPage() {
   const [firstName, setFirstName] = useState('');
@@ -11,9 +10,31 @@ function AccountPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState('');
 
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleRegister = async () => {
     try {
-      await register(firstName, lastName, registerEmail, registerPassword);
+      if (!loginEmail || !loginPassword) {
+        throw new Error('Please fill out all fields');
+      }
+      const response = await fetch('https://fakestoreapi.com/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName, lastName, email: registerEmail, password: registerPassword }),
+      });
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+      const { token } = await response.json();
+      localStorage.setItem('token', token);
       setIsLoggedIn(true);
       setError('');
     } catch (error) {
@@ -23,7 +44,21 @@ function AccountPage() {
 
   const handleLogin = async () => {
     try {
-      await login(loginEmail, loginPassword);
+      if (!loginEmail || !loginPassword) {
+        throw new Error('Email and password are required');
+      }
+      const response = await fetch('https://fakestoreapi.com/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+      });
+        if (!response.ok) {
+        throw new Error('Invalid email or password');
+      }
+      const { token } = await response.json();
+      localStorage.setItem('token', token);
       setIsLoggedIn(true);
       setError('');
     } catch (error) {
@@ -32,6 +67,7 @@ function AccountPage() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
     setFirstName('');
     setLastName('');
@@ -40,6 +76,7 @@ function AccountPage() {
     setLoginEmail('');
     setLoginPassword('');
   };
+ 
 
   return (
     <div className="form-container">

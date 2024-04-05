@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Cart() {
     const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+      const savedCartItems = localStorage.getItem('cartItems');
+      if (savedCartItems) {
+        setCartItems(JSON.parse(savedCartItems));
+      }
+    }, []);
+  
+    useEffect(() => {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
 
     const addItemToCart = (item) => {
         const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
@@ -28,6 +39,10 @@ function Cart() {
 
       const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+      const handleCheckout = () => {
+        setCartItems([]);
+        alert('Checkout successful!');
+      };
   
       return (
         <div>
@@ -51,6 +66,7 @@ function Cart() {
             </ul>
           )}
           <p>Total: ${total}</p>
+          <button onClick={handleCheckout}>Checkout</button>
         </div>
       );
     }

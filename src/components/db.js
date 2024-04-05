@@ -18,12 +18,12 @@ async function register(username, password) {
   return user;
 }
 
-async function login(username, password) {
+async function login(email, password) {
   const sql = `
     SELECT * FROM users
-    WHERE username = $1;
+    WHERE email = $1;
     `;
-  const { rows } = await client.query(sql, [username]);
+  const { rows } = await client.query(sql, [email]);
   const user = rows[0];
   if (!user) {
     throw new Error("User not found");
@@ -59,5 +59,5 @@ module.exports = {
   createTables,
   register,
   login,
-  getAllUsers,
+  getAllUsers
 };
