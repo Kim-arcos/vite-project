@@ -4,11 +4,15 @@ function Cart() {
     const [cartItems, setCartItems] = useState([]);
 
     useEffect(() => {
-      const savedCartItems = localStorage.getItem('cartItems');
-      if (savedCartItems) {
-        setCartItems(JSON.parse(savedCartItems));
-      }
-    }, []);
+      fetch('https://fakestoreapi.com/carts')
+        .then(res => res.json())
+        .then(data => {
+        setCartItems(data);
+        })
+        .catch(error => {
+          console.error('Error fetching cart items:', error);
+        });
+    }, []); 
   
     useEffect(() => {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));

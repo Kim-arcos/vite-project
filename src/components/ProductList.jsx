@@ -49,6 +49,7 @@ function ProductList() {
             alt={product.title}
           />
           <button onClick={() => openModal(product)}>View Details</button>
+          <button onClick={() => addToCart(product)} className="add-to-cart-btn">Add to Cart</button>
         </div>
       ))}
       <ProductModal

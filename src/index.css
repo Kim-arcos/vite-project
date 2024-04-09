@@ -20,18 +20,42 @@
   font-size: 1.2rem;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-
-/*ProductList page*/
-.product-list {
+.home-product-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
-
-.product-card {
+.home-product-card {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 20px;
+  overflow: hidden;
+}
+
+.home-product-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  
+}
+
+.home-product-info {
+  text-align: center;
+}
+/*ProductList page*/
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .product-image {
@@ -41,12 +65,13 @@
 }
 
 .product-info {
-  text-align: center;
+  padding: 10px;
+  flex-grow: 1;
 }
 
 .product-info h2 {
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .product-info p {
@@ -63,22 +88,27 @@
 .product-card {
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   background-color: #fff;
 }
 
 .product-card img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .product-card h3 {
   margin-top: 0;
+  margin-bottom: 5px;
 }
 
 .product-card button {
-  margin-top: 10px;
-  padding: 8px 16px;
+  display: block;
+  width: calc(100% - 20px);
+  margin: 10px auto 0;
+  padding: 8px 8px;
   background-color: #3c87d8;
   color: #fff;
   border: none;
@@ -88,6 +118,10 @@
 
 .product-card button:hover {
   background-color: #a9cefd;
+}
+
+.add-to-cart-btn {
+  margin-left: 20px;
 }
 
 /*Modal*/
