@@ -41,7 +41,10 @@ function AccountPage() {
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error("Registration failed");
+        throw new Error(data.message || "Registration failed");
+      }
+      if (!data.token) {
+        throw new Error("Token not received");
       }
       localStorage.setItem("token", data.token);
       setIsLoggedIn(true);

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Modal from "react-modal";
 
-function ProductModal({ isOpen, onClose, product }) {
-  const [quantity, setQuantity] = useState(1);
+function ProductModal({ isOpen, onClose, product, setCartItems, initialQuantity }) {
+  const [quantity, setQuantity] = useState(initialQuantity || 1);
+  const [addedToCart, setAddedToCart] = useState(false);
+
   if (!product) {
     return null;
   }
@@ -18,7 +20,15 @@ function ProductModal({ isOpen, onClose, product }) {
   };
 
   const handleAddToCart = () => {
-    console.log(`Adding ${quantity} ${product.title}(s) to cart`);
+    const cartItem = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      quantity: quantity 
+    };
+    setCartItems((prevCartItems) => [...prevCartItems, cartItem]);
+    setAddedToCart(true);
+    setTimeout(() => setAddedToCart(false), 2000);
   };
 
   return (
@@ -42,6 +52,7 @@ function ProductModal({ isOpen, onClose, product }) {
           <button onClick={increaseQuantity}> + </button>
         </div>
         <button onClick={handleAddToCart}>Add to Cart</button>
+        {addedToCart && <p>Item added to cart</p>}
       </div>
     </Modal>
   );
