@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import { login } from "./db"; lines 1-2 cause error once uncommented
-//import * as db from "./db";
 
 function AccountPage() {
   const [firstName, setFirstName] = useState("");
@@ -31,33 +29,41 @@ function AccountPage() {
       ) {
         throw new Error("Please fill out all fields");
       }
-      const response = await fetch("https://fakestoreapi.com/users", {
+      const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstname: firstName,
-          lastname: lastName,
-          email: registerEmail,
           username: registerUsername,
           password: registerPassword,
         }),
       });
+      const data = await response.json();
       if (!response.ok) {
         throw new Error("Registration failed");
       }
-      const { token } = await response.json();
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", data.token);
       setIsLoggedIn(true);
       setError("");
     } catch (error) {
       setError(error.message);
     }
   };
-  const handleLogin = async () => {
+
+   const handleLogin = async () => {
     try {
-      await db.login(loginEmail, loginPassword);
+      const response = await fetch("https://fsa-jwt-practice.herokuapp.com/authenticate", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` 
+        },
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
       setIsLoggedIn(true);
       setError("");
     } catch (error) {

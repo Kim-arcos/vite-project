@@ -1,4 +1,4 @@
-/*Home, titles*/
+/*Home, titles, products */
 .home-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -42,6 +42,7 @@
 .home-product-info {
   text-align: center;
 }
+
 /*ProductList page*/
 .product-list {
   display: grid;
