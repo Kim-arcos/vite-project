@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import ProductModal from "./ProductModal";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -34,8 +34,25 @@ function ProductList() {
     setModalIsOpen(false);
   };
 
-  const addToCart = (product) => {
+  const addToCart = (product, quantity = 1) => {
     console.log("Adding to cart:", product);
+    
+    const existingItem = cartItems.find((item) => item.id === product.id);
+    if (existingItem) {
+      setCartItems((prevCartItems) =>
+        prevCartItems.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+        )
+      );
+    } else {
+      const cartItem = {
+        ...product,
+        quantity,
+      };
+      setCartItems((prevCartItems) => [...prevCartItems, cartItem]);
+    }
+    
+    console.log("Cart items after adding:", cartItems);
   };
 
   return (
@@ -56,6 +73,7 @@ function ProductList() {
         isOpen={modalIsOpen}
         onClose={closeModal}
         product={selectedProduct}
+        setCartItems={setCartItems}
         addToCart={addToCart}
       />
     </div>

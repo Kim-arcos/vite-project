@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
+import UserContext from "./UserContext";
 
 function AccountPage() {
+  const { isLoggedIn, username, setIsLoggedIn, setUsername, handleLogout } = useContext(UserContext);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
@@ -8,19 +11,8 @@ function AccountPage() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [error, setError] = useState("");
-  const [username, setUsername] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const storedUsername = localStorage.getItem("username");
-
-    if (token) {
-      setIsLoggedIn(true);
-      setUsername(storedUsername);
-    }
-  }, []);
 
   const handleRegister = async () => {
     try {
@@ -34,16 +26,19 @@ function AccountPage() {
         throw new Error("Please fill out all fields");
       }
 
-      const response = await fetch("https://fsa-jwt-practice.herokuapp.com/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: registerUsername,
-          password: registerPassword,
-        }),
-      });
+      const response = await fetch(
+        "https://fsa-jwt-practice.herokuapp.com/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: registerUsername,
+            password: registerPassword,
+          }),
+        }
+      );
 
       const data = await response.json();
       if (!response.ok) {
@@ -63,18 +58,21 @@ function AccountPage() {
     }
   };
 
-   const handleLogin = async () => {
+  const handleLogin = async () => {
     try {
-      const response = await fetch("https://fsa-jwt-practice.herokuapp.com/authenticate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: loginEmail,
-          password: loginPassword,
-        }),
-      });
+      const response = await fetch(
+        "https://fsa-jwt-practice.herokuapp.com/authenticate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: loginEmail,
+            password: loginPassword,
+          }),
+        }
+      );
 
       const data = await response.json();
       if (!response.ok) {
@@ -89,21 +87,6 @@ function AccountPage() {
     } catch (error) {
       setError(error.message);
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-
-    setIsLoggedIn(false);
-    setFirstName("");
-    setLastName("");
-    setRegisterEmail("");
-    setRegisterUsername("");
-    setRegisterPassword("");
-    setLoginEmail("");
-    setLoginPassword("");
-    setUsername("");
   };
 
   return (
@@ -161,7 +144,7 @@ function AccountPage() {
         </div>
       ) : (
         <div>
-          <h2>Welcome, {registerUsername}!</h2>
+          <h2>Welcome, {username}!</h2>
           <button onClick={handleLogout}>Logout</button>
         </div>
       )}
