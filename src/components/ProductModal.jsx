@@ -47,7 +47,7 @@ function ProductModal({ isOpen, onClose, product, setCartItems, initialQuantity 
       </div>
       <div className="modal-actions">
         <div className="quantity-controls">
-          <button onClick={decreaseQuantity}> - </button>
+        <button onClick={decreaseQuantity} disabled={quantity <= 1}> - </button>
           <span>{quantity}</span>
           <button onClick={increaseQuantity}> + </button>
         </div>
