@@ -26,9 +26,17 @@ function ProductModal({
   };
 
   const handleAddToCart = () => {
-    addToCart({
-      ...product,
-      quantity: quantity,
+    setCartItems((prevCartItems) => {
+      const existingItem = prevCartItems.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prevCartItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      } else {
+        return [...prevCartItems, { ...product, quantity }];
+      }
     });
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);

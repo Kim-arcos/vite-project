@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ProductModal from './ProductModal';
 
 function Cart() {
-    const [cartItems, setCartItems] = useState([]);
+    const initialCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    console.log('Initial cartItems from localStorage:', initialCartItems);
+    const [cartItems, setCartItems] = useState(initialCartItems);
 
     useEffect(() => {
       fetch('https://fakestoreapi.com/products')
@@ -15,6 +17,7 @@ function Cart() {
                   }));
                   setCartItems(items);
               }
+              localStorage.setItem('cartItems', JSON.stringify(cartItems));
           })
           .catch(error => {
               console.error('Error fetching cart items:', error);
@@ -22,6 +25,7 @@ function Cart() {
   }, []);
   
     useEffect(() => {
+      console.log('Saving cartItems to localStorage:', cartItems);
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
 
@@ -82,7 +86,7 @@ const handleCheckout = () => {
             ))}
         </ul>
           )}
-          <p>Total: ${total}</p>
+           <p>Total: ${total.toFixed(2)}</p>
           <button onClick={handleCheckout}>Checkout</button>
         </div>
       );

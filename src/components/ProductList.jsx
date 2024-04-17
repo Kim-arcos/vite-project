@@ -25,6 +25,10 @@ function ProductList() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    console.log('Updated cartItems:', cartItems);
+  }, [cartItems]);
+
   const openModal = (product) => {
     setSelectedProduct(product);
     setModalIsOpen(true);
@@ -35,9 +39,7 @@ function ProductList() {
   };
 
   const addToCart = (product, quantity = 1) => {
-    console.log("Adding to cart:", product);
-    
-    const existingItem = cartItems.find((item) => item.id === product.id);
+      const existingItem = cartItems.find((item) => item.id === product.id);
     if (existingItem) {
       setCartItems((prevCartItems) =>
         prevCartItems.map((item) =>
@@ -51,8 +53,6 @@ function ProductList() {
       };
       setCartItems((prevCartItems) => [...prevCartItems, cartItem]);
     }
-    
-    console.log("Cart items after adding:", cartItems);
   };
 
   return (
